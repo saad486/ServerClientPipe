@@ -20,9 +20,7 @@ struct Node{
 	int id;
 	int active;
 	char name[15];
-	
-
-};
+	};
 
 //Node array 
 struct Node * processArray[30];//if typed exit then it will be freed
@@ -30,7 +28,6 @@ int processCounter = 0;
 
 	int pd[2];
 	int pd1[2];
-
 
 void printArray()
 {	
@@ -83,12 +80,9 @@ static void signalhandler(int signo)
 	int status;
 	int pid;
 	
-	
-		pid = waitpid(-1,&status,0);
+	pid = waitpid(-1,&status,0);
 		
-		
-		inactiveProcess(pid);
-	
+	inactiveProcess(pid);
 }
 char* methodArithmetic(char * token, char * buff)
 {
@@ -111,16 +105,15 @@ char* methodArithmetic(char * token, char * buff)
 					if(check == 0)
 						break;
 			
-						
 		if(strcasecmp("add",identifier) == 0)
 			{
 				sum += atoi(token);
 			}
 		else if(strcasecmp("sub",identifier) == 0)
 			{	
-			
-				if(firstNumber == 0)
-					{	sum = atoi(token);
+					if(firstNumber == 0)
+					{
+						sum = atoi(token);
 						firstNumber = 1;
 					}
 				else sum -= atoi(token);
@@ -153,14 +146,12 @@ char* methodArithmetic(char * token, char * buff)
 			token = strtok(NULL," \n");
 		}
 		
-	
 	if(check == 0)
 		strcpy(buff,"Invalid arguments\n");
 	
 	else if(divideZero == 1)
 				strcpy(buff,DIVIDE);
 				
-			
 	else if ( arguments == 1)
 		strcpy(buff,"Too few arguments! Atleast two required\n");
 			
@@ -187,27 +178,19 @@ int checkDigit(char * token)
 		 
 			if(c == 0)
 				break;
-				
-				i++;
-	
-	}
+					i++;
+		}
 	if(c  == 0)
 		return 0;
 	else return 1;
-	
-
-
 }
 
 
 int main()
 {
-	
-	
 	int count = write(STDOUT_FILENO, START, strlen(START));
-	
 
-		if(count == -1)
+	if(count == -1)
 		 {	
 		 	perror("error: ");
 		 	exit(EXIT_FAILURE);
@@ -220,6 +203,7 @@ int main()
 				perror("error");
 				exit(1);	
 			}
+	
 	pipeCheck = pipe(pd1);
 			
 			if(pipeCheck == -1)
@@ -227,7 +211,6 @@ int main()
 				perror("error");
 				exit(1);	
 			}
-	
 	
 	int pid = fork();
 		
@@ -242,10 +225,8 @@ int main()
 		perror("error");
 	}
 	
-		
 //############Server####################	
 	
-
 if(pid == 0)
 {	
 	
@@ -266,9 +247,7 @@ for(;;)
 					perror("error");
 			}
 		
-				
 	char * temp[20]; //array of pointers
-		
 	//boolean true false
 	int doTokenize = 0;
 	int skip = 0;
@@ -276,17 +255,12 @@ for(;;)
 	int quit = 0;
 	int listHelp = 0;
 	int counterTemp = 0;
-			
 	//
-		      	
 	int countToken = 0;//token to be used later to free space from heap (temp)
 	char * token;
 	char * buffArithmetic = (char *)malloc(50 * sizeof(char));
 	char * buffList = (char *)malloc(1000*sizeof(char));
 				
-		
-		        
-
 	if((rcount-1) == 0)
 		token = "a";//garbage value
 	else
@@ -301,8 +275,7 @@ for(;;)
 		 			
 			if(ccount == -1)
 		 		perror("error");
-		 	
-		 	
+	 		
 	}
 	else if(strcasecmp("sub",token) == 0)
 	{
@@ -313,8 +286,6 @@ for(;;)
 		 			
 			if(ccount == -1)
 		 		perror("error");
-		 		
-		 	
 	}
 	else if(strcasecmp("mult",token) == 0)
 	{
@@ -325,8 +296,6 @@ for(;;)
 		 			
 			if(ccount == -1)
 		 		perror("error");
-		 		
-			
 	}
 	else if(strcasecmp("div",token) == 0)
 	{
@@ -337,8 +306,6 @@ for(;;)
 		 			
 			if(ccount == -1)
 		 		perror("error");
-		 		
-		
 	}
 	else if(strcasecmp("list",token) == 0)
 	{
@@ -349,8 +316,7 @@ for(;;)
 			if(token == NULL)
 					printActiveArray();
 					
-				
-			else if(strcmp(token,"all") == 0)	//check why tokenizing first and checking caused the problem
+		else if(strcmp(token,"all") == 0)	//check why tokenizing first and checking caused the problem
 				{	
 					 if((token = strtok(NULL," \n")) == NULL)
 						printArray();
@@ -363,6 +329,7 @@ for(;;)
 	}
 	else write(pd1[1],"List is currently Empty\n",strlen("List is currently Empty\n"));
 	}
+	
 	else if(strcasecmp("exit",token) == 0)
 	{
 		token = strtok(NULL," \n");
@@ -375,11 +342,9 @@ for(;;)
 			int count = kill(pid,SIGTERM);
 				if(count == -1)
 					perror("error");
-					
-					
-		}
-		
+				}
 	}
+	
 	else if(strcasecmp("help",token) == 0)
 	{
 		token = strtok(NULL," \n");
@@ -390,8 +355,7 @@ for(;;)
 	}
 	else if(strcasecmp("kill",token) == 0)
 	{
-		
-		token = strtok(NULL," \n");
+			token = strtok(NULL," \n");
 		
 		if(token==NULL)
 			{
@@ -426,7 +390,6 @@ for(;;)
 					else write(pd1[1],"Invalid arguments\n",strlen("Invalid arguments\n"));	
 		}
 	
-	
 	}
 	else if(strcasecmp("run",token) == 0)
 		{	
@@ -458,16 +421,12 @@ for(;;)
 	else
 		count = write(pd1[1], MESSAGE, strlen(MESSAGE));
 			 
-		
 	//running process
 	if(skip == 1)
 	{	
 		int status;
 		
 		int sd[2];
-		
-		
-
 		
 		int serverPipe = pipe(sd);
 	
@@ -481,8 +440,6 @@ for(;;)
 		 	if(serverPid == -1)
 		 		perror("error");
 		 		
-		 
-				
 		if(serverPid == 0)
 		{	
 			//write(sd[1],"saad",4);
@@ -507,8 +464,6 @@ for(;;)
 			
 			int count = read(sd[0],tempbuff,50);
 
-		
-			
 			if(count == 0)
 				{
 					
@@ -534,12 +489,9 @@ for(;;)
 			free(temp[j]);
 			
 			free(buffArithmetic);
-		
-}
+	}
 	
 }				
-
-
 //############Client##########################
 	
 else if(pid > 0) 
